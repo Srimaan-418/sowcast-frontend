@@ -26,7 +26,7 @@ function App() {
     setPrediction(null);
     setAdvice('');
 
-    const OWM_API_KEY = "0167f9a60c197f048065eec7daa7e695"; // Your API Key
+    const OWM_API_KEY = "754979fc421c2f5b66018ce367999a93"; // Your API Key
     const city = "Hyderabad";
     
     try {
