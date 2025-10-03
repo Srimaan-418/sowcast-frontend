@@ -20,20 +20,43 @@ function App() {
     }
   }, [prediction]);
 
+  // Replace the old getPrediction function in App.jsx with this new one
+
   const getPrediction = async () => {
-    const todayWeather = {
-      "tempmax": 28.0, "tempmin": 22.0, "humidity": 80.0, "precip": 0.0
-    };
     setLoading(true);
     setError('');
     setPrediction(null);
     setAdvice('');
 
+    const OWM_API_KEY = "0167f9a60c197f048065eec7daa7e695"; // <-- PASTE YOUR KEY HERE
+    const city = "Hyderabad";
+    
     try {
-      const response = await axios.post('https://sowcast-api.onrender.com/predict', todayWeather);
-      setPrediction(response.data); // Set the entire prediction object
+      // STEP 1: Fetch TODAY'S live weather from OpenWeatherMap
+      const liveWeatherResponse = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OWM_API_KEY}&units=metric`
+      );
+      
+      const liveData = liveWeatherResponse.data;
+      
+      // STEP 2: Prepare the live data for YOUR model
+      const dataForModel = {
+        "tempmax": liveData.main.temp_max,
+        "tempmin": liveData.main.temp_min,
+        "humidity": liveData.main.humidity,
+        "precip": liveData.rain ? liveData.rain['1h'] || 0 : 0 // Precipitation in the last hour
+      };
+
+      // STEP 3: Send the LIVE data to your prediction API
+      const predictionResponse = await axios.post(
+        'https://sowcast-api.onrender.com/predict', // Your deployed API
+        dataForModel
+      );
+      
+      setPrediction(predictionResponse.data);
+
     } catch (err) {
-      setError('Could not connect to the prediction server. Is it running?');
+      setError('Could not get prediction. Check the API key and server status.');
       console.error(err);
     } finally {
       setLoading(false);
