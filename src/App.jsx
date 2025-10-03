@@ -20,15 +20,13 @@ function App() {
     }
   }, [prediction]);
 
-  // Replace the old getPrediction function in App.jsx with this new one
-
   const getPrediction = async () => {
     setLoading(true);
     setError('');
     setPrediction(null);
     setAdvice('');
 
-    const OWM_API_KEY = "0167f9a60c197f048065eec7daa7e695"; // <-- PASTE YOUR KEY HERE
+    const OWM_API_KEY = "0167f9a60c197f048065eec7daa7e695"; // Your API Key
     const city = "Hyderabad";
     
     try {
@@ -66,7 +64,7 @@ function App() {
   return (
     <div className="App">
       <div className="weather-card">
-        <h1>Agri-Predict</h1>
+        <h1>SowCast</h1>
         <p className="subtitle">Daily forecast and watering advice for your crops.</p>
         
         <button onClick={getPrediction} disabled={loading}>
