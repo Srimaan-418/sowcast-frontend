@@ -1,0 +1,157 @@
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  --background-color: #0a0f2d;
+  --card-background: rgba(30, 39, 93, 0.3);
+  --primary-text: #e0e0e0;
+  --accent-color: #64b5f6;
+  --accent-text: #0d47a1;
+  --glow-color-1: #3a8dff;
+  --glow-color-2: #9c27b0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden; /* Prevents scrollbars from the glow effect */
+  position: relative;
+}
+
+/* Animated background glow */
+body::before, body::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--glow-color-1), transparent 60%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(100px);
+  z-index: -1;
+  animation: moveGlow1 20s infinite alternate;
+}
+
+body::after {
+  background: radial-gradient(circle, var(--glow-color-2), transparent 60%);
+  animation: moveGlow2 25s infinite alternate;
+  animation-delay: -5s;
+}
+
+@keyframes moveGlow1 {
+  from { transform: translate(-70%, -60%) rotate(0deg); }
+  to { transform: translate(-30%, -40%) rotate(180deg); }
+}
+@keyframes moveGlow2 {
+  from { transform: translate(-20%, -30%) rotate(0deg); }
+  to { transform: translate(-60%, -50%) rotate(-180deg); }
+}
+
+.weather-card {
+  background: var(--card-background);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--accent-color);
+  text-shadow: 0 0 10px rgba(100, 181, 246, 0.5);
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+button {
+  background: var(--accent-color);
+  color: var(--accent-text);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(100, 181, 246, 0.4);
+}
+
+.results {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.advice {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.result-item span {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.result-item p {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 5px 0 0 0;
+}
+
+.advice h3 {
+  margin: 0 0 10px 0;
+  color: var(--accent-color);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.advice p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.error {
+  color: #ff8a80;
+  background: rgba(255, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 8px;
+}
